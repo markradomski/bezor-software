@@ -1,0 +1,451 @@
+body {
+  /* background: #f5f5f5; */
+  letter-spacing: 0.5px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.splash-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hidden.menu {
+  display: none;
+}
+
+/*--------------
+      Menu
+---------------*/
+
+.ui.menu {
+  background: transparent;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.ui.menu.topnav .item {
+  color: #fff;
+}
+
+.topnav .ui.container {
+  width: 100vw;
+}
+
+.topnav .logo .cross {
+  color: red;
+}
+
+.topnav .logo .title {
+  /* font-weight: 600; */
+}
+
+/*--------------
+     Fixed
+---------------*/
+
+.ui.menu.scrolled {
+  background-color: #fff !important;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  transition: all 400ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.ui.menu.scrolled .item {
+  color: #000;
+}
+
+.ui.menu.really-fixed {
+  position: fixed;
+  z-index: 101;
+  margin: 0em;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  right: auto;
+  bottom: auto;
+}
+
+.ui.fixed.menu:hover,
+.ui[class*='top fixed'].menu:hover {
+  background-color: #fff !important;
+  transition: all 400ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.ui.fixed.menu:hover .item,
+.ui[class*='top fixed'].menu:hover .item {
+  color: #000;
+}
+
+.masthead.segment {
+  /* min-height: 700px; */
+  padding: 0em;
+}
+.masthead .logo.item img {
+  margin-right: 1em;
+}
+.masthead .ui.menu .ui.button {
+  margin-left: 0.5em;
+}
+.masthead h1.ui.header {
+  margin-top: 3em;
+  margin-bottom: 0em;
+  font-size: 4em;
+  font-weight: normal;
+}
+.masthead h2 {
+  font-size: 1.7em;
+  font-weight: normal;
+}
+
+h2.header.order {
+  font-weight: 400 !important;
+}
+
+.ui.vertical.stripe {
+  padding: 8em 0em;
+}
+.ui.vertical.stripe h3 {
+  font-size: 2em;
+}
+.ui.vertical.stripe .button + h3,
+.ui.vertical.stripe p + h3 {
+  margin-top: 3em;
+}
+.ui.vertical.stripe .floated.image {
+  clear: both;
+}
+.ui.vertical.stripe p {
+  font-size: 1.33em;
+}
+.ui.vertical.stripe .horizontal.divider {
+  margin: 3em 0em;
+}
+
+.quote.stripe.segment {
+  padding: 0em;
+}
+.quote.stripe.segment .grid .column {
+  padding-top: 5em;
+  padding-bottom: 5em;
+}
+
+.footer.segment {
+  padding: 5em 0em;
+}
+
+.footer .link a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer .ui.header {
+  font-weight: 600;
+}
+
+.secondary.pointing.menu .toc.item {
+  display: none;
+}
+
+@media only screen and (max-width: 700px) {
+  .ui.fixed.menu {
+    /* display: none !important; */
+  }
+  .secondary.pointing.menu .item,
+  .secondary.pointing.menu .menu {
+    display: none;
+  }
+  .secondary.pointing.menu .toc.item {
+    display: block;
+  }
+  .masthead.segment {
+    /* min-height: 350px; */
+  }
+  .masthead h1.ui.header {
+    font-size: 2em;
+    margin-top: 1.5em;
+  }
+  .masthead h2 {
+    margin-top: 0.5em;
+    font-size: 1.5em;
+  }
+}
+
+#splash_ {
+  background: url(/images/splash-01.jpg) no-repeat center center fixed;
+  min-height: 720px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.ui.menu .item {
+  font-size: 1.4rem;
+  padding: 0.6rem 1.2rem;
+}
+
+.topnav .item.logo {
+  padding-left: 3rem;
+}
+
+.ui.menu .item:before {
+  width: 0px;
+}
+
+@media only screen and (min-width: 768px) {
+  .ui.menu:not(.secondary):not(.text):not(.tabular):not(.borderless)
+    > .container
+    > .item:not(.right):not(.borderless):first-child {
+    border-left: 0px;
+  }
+}
+
+.ui.menu .active.item {
+  background: transparent;
+}
+
+.ui.cards > .card > .image:not(.ui) > img,
+.ui.card > .image:not(.ui) > img {
+  padding: 1.5rem;
+}
+
+/*--------------
+      Hover
+---------------*/
+
+.ui.link.menu .item:hover,
+.ui.menu .dropdown.item:hover,
+.ui.menu .link.item:hover,
+.ui.menu a.item:hover {
+  background: transparent;
+}
+
+/*--------------
+  Active Hover
+---------------*/
+
+.ui.menu .active.item:hover,
+.ui.vertical.menu .active.item:hover {
+  background-color: transparent;
+}
+
+/*--------------
+     Content
+---------------*/
+
+.ui.cards > .card > .content,
+.ui.card > .content {
+  border-top: 0px;
+}
+
+.ui.cards > .card > .content > .header:not(.ui),
+.ui.card > .content > .header:not(.ui) {
+  font-size: 1.2rem;
+  margin-top: 0em;
+  font-weight: 400;
+  padding-bottom: 0.5rem;
+}
+/* Default Header Size */
+
+.ui.items > .item > .content > .header:not(.ui) {
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.ui.header {
+  font-weight: 400;
+}
+
+/*----------------
+  Extra Content
+-----------------*/
+
+.ui.cards > .card > .extra,
+.ui.card > .extra {
+  background: #f0f8ff;
+}
+
+/*--------------
+      Card
+---------------*/
+
+.ui.cards > .card,
+.ui.card {
+  -webkit-box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  width: 350px;
+}
+
+/*--------------
+     Images
+---------------*/
+
+.ui.cards > .card > .image,
+.ui.card > .image {
+  background: transparent;
+}
+
+.ui.centered.images,
+.ui.centered.image {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/*--------------
+     Segment
+---------------*/
+
+/*******************************
+             pages
+*******************************/
+
+/* Home */
+
+.home.container {
+  /* background-color: #f5f5f5; */
+}
+
+/* Order */
+
+#order .ui.menu.topnav .item {
+  color: #000;
+}
+
+#order.segment {
+  border-bottom: 0px;
+}
+
+.order .order-container {
+  /* padding-top: 3rem; */
+}
+
+.order .order-header {
+  font-size: 2rem;
+  padding-bottom: 5rem;
+  padding-left: 1.2rem;
+  text-align: left;
+}
+
+.segment.order-details {
+  border: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  text-align: left;
+}
+
+.order-details .header {
+  font-size: 3rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  line-height: 3rem;
+}
+
+.order-details .price {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.order-details .description {
+  color: rgba(0, 0, 0, 0.4);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.cc-buttons {
+  margin-top: 2rem !important;
+}
+
+/* Title */
+
+.ui.steps .step .title {
+  font-weight: 600;
+}
+
+/* Completed */
+
+.ui.steps .step.active .title {
+  color: #4183c4;
+}
+
+.ui.steps .step.completed > .icon:before,
+.ui.ordered.steps .step.completed:before {
+  color: #197bef;
+}
+
+.ui.items > .item > .image,
+.ui.items > .item > .image > img {
+  max-height: 450px !important;
+}
+
+/* About */
+
+/* ----------- iPhone 5 and 5S ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+}
+
+/* ----------- iPhone 6 ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+}
+
+/* ----------- iPhone 6+ ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) {
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+}
+
+/* ----------- iPad mini ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+}
+
+/* ----------- iPad 3 and 4 ----------- */
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+}

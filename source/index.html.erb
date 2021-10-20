@@ -1,0 +1,61 @@
+---
+title: Bezor Software
+---
+
+  <div class="pusher">
+
+<div id="splash" class="ui vertical masthead center aligned segment">
+
+  <%=partial "partials/topnav"%>
+<img class="splash-img" src="images/splash-01.jpg">
+
+</div>
+<div class="ui container home" style="margin-top:52px">
+  <div class="ui centered cards">
+    <% blog.articles.each do |article| %>
+      <div style="cursor: pointer;" class="ui card" onclick="orderPage({
+              sku: '<%=article.data.sku%>',
+              name: '<%=article.data.title%>',
+              image: '<%=article.data.image%>',
+              price: '<%=article.data.price%>',
+              description: '<%=article.data.summary%>'
+            } )"> 
+           <div class="image">
+            <img src="/images/products/<%=article.data.image%>">
+           </div> 
+        <div class="content">
+            <div class="header">
+              <%=article.data.title%>
+            </div>
+          <div class="meta">
+            <%=article.data.summary%>
+          </div>
+        </div>
+        <div class="extra content">
+          <span>
+            <i class="cart icon"></i>
+            <%=number_to_currency(article.data.price)%>
+          </span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+</div>
+<script src="/assets/js/cart.js"></script>
+
+<script>
+
+// skip product/catalog page and go straight to order
+function orderPage(data) {
+  Cart.addItem(data);
+  Cart.save();
+  location.href="/order";
+}
+
+// get a snapshot of the data in firebase (not locally)
+firebase.database().ref("/catalog").once("value", snap => {
+  let products = snap.val();
+  console.log("products",products);
+})
+</script>

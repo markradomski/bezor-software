@@ -1,0 +1,24 @@
+<div class="ui menu fixed topnav">
+  <div class="ui container">
+    <a class="item logo" href="/"><span class="title">Bezor</span><span class="cross">+</span>Software</a>
+<!--    <a class="item">Products</a>
+    <a class="item">About</a>
+    -->
+    <div id="auth" class="right item">
+      <a class=" item" href="/order">
+        <i class ="cart icon"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+
+$(function () {
+  $(document).scroll(function () {
+    var $nav = $(".topnav");
+    $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+  });
+});
+
+</script>

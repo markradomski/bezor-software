@@ -1,0 +1,237 @@
+---
+layout: empty
+title: Current Order
+---
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<div  id="order"class="ui vertical masthead center aligned segment">
+
+  <%=partial "partials/topnav"%>
+<div class="ui container order">
+
+  <div v-if="!hasItems" class="ui centered container" style="margin-top:10rem">
+    <i>Oh dear.Your shopping cart is empty. <a href="/">Buy some merch!</a></i>
+  </div>
+<!--
+  <div v-if="hasItems" class="order-header">
+      <h2 class="ui header">Your Order</h2>
+  </div>
+-->
+  <div v-if="hasItems" class="ui stackable grid order-container">
+    <div id='item-table' class="nine wide column">
+      <div class="ui items">
+        <template v-for="item in items">
+          <div class="item">
+            <div class="ui large image centered">
+              <img :src=`/images/products/${item.image}`>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+    <div id="payments" class="seven wide column show-checkout">
+        <template v-for="item in items">
+          <div class="ui aligned padded segment order-details">
+              <div class="header">{{item.name}}</div>
+              <div class="price">${{item.lineTotal() }} AUD</div>
+              <div class="meta">
+                <span class="quantity">Quality: {{ item.quantity }} </span>
+              </div>
+              <div class="description">
+                <p>{{item.description}}</p>
+              </div>
+              <div class="extra">
+                <div style="cursor:pointer;" v-on:click="remove(item)" class="ui floated small ">
+                  <i class="remove icon"></i> Remove
+                </div>
+              </div>
+            <div class="ui buttons two cc-buttons">
+              <button v-on:click="openStripe" class="ui center aligned medium black basic button">
+                <i class="stripe icon"></i>
+                Credit Card
+              </button>
+              <button id="paypal-button" class="ui center aligned medium black basic button">
+                <i class="paypal icon"></i>
+                PayPal
+              </button>
+              </div>
+            </div>
+        </template>
+      <div class="ui aligned padded segment order-details">
+      <p><i>** This is a demo site so use 4242 4242 4242 4242</i></p>
+      </div>
+    </div>
+    <div class="sixteen wide column hide-checkout" style="display:none">
+      <div class="ui fluid steps">
+        <div v-bind:class="{completed: progress.tallied, active: true, step: true}">
+          <i class="hand peace icon"></i>
+          <div class="content">
+            <div class="title">Received</div>
+            <div class="description">Processing...</div>
+          </div>
+        </div>
+        <div v-bind:class="{completed: progress.captured, active: progress.tallied, step: true}">
+          <i class="payment icon"></i>
+          <div class="content">
+            <div class="title">Charged</div>
+            <div class="description">We got your $$</div>
+          </div>
+        </div>
+        <div v-bind:class="{completed: progress.fulfilled, active: progress.invoiced, step: true}">
+          <i class="download icon"></i>
+          <div class="content">
+            <div class="title">Fulfilled</div>
+            <div class="description">Downloads ready!</div>
+          </div>
+        </div>
+        <div v-bind:class="{completed: progress.notified, active: progress.fulfilled, step: true}">
+          <i class="envelope icon"></i>
+          <div class="content">
+            <div class="title">Email Sent</div>
+            <div class="description">You should hear a ding soon...</div>
+          </div>
+        </div>
+      </div>
+      <div v-if="progress.invoiced" class="ui container" style="margin-top:10rem">
+        <h3 class="ui centered header">Order Number: {{orderId}}</h3>
+        <p> At present this is a demo site. However, if you wish to purchase any items please
+        email annette@bezor.com.au  
+        </p>
+      </div>
+        <!--
+      <div class="ui horizontal divider">
+        <h4 class="ui header">Downloads</h4>
+      </div>
+      <div v-if="progress.invoiced" class="ui divided items">
+        <div v-for="download in invoice.deliverables" class="item">
+          <i class="huge file archive outline icon"></i>
+          <div class="content">
+            <div class="header">{{download.name}}</div>
+            <div class="extra">
+              <button class="ui small basic button" v-on:click="execDownload(download)" :id=`download-${download.id}` :disabled="noDownloads(download)">
+                <i class="download icon"></i>{{downloadButton(download)}}
+              </button>
+              {{download.downloadsRemaining}} downloads left of {{download.limit}} total.
+            </div>
+          </div>
+        </div>
+    </div> 
+    -->
+    </div>
+</div>
+  </div>
+</div>
+<script src="/assets/js/cart.js"></script>
+<script src="/assets/js/vendor/vuefire.min.js"></script>
+
+
+<script>
+Vue.use(VueFire);
+var db = firebase.database();
+let processing = false;
+let orderId =  Cart.generateId();
+Cart.load();
+
+var handler = StripeCheckout.configure({
+  key: 'pk_test_oYH0K3UUI8vDiIIr4netpKob', // publishable stripe key
+  image: 'https://app.redfour.io/images/icon/apple-icon-180x180.png',
+  locale: 'auto',
+  zipCode: true,
+  billingAddress: true,
+  token: function(token) {
+    $(".show-checkout").fadeOut(400, function(){
+      $("#item-table").removeClass("ten wide column").addClass("sixteen wide column");
+      $(".hide-checkout").show();
+    });
+    var payload = {
+      order: {
+        id: orderId,
+        //userId: currentUser.id, // TODO 
+        processor: "stripe",
+        ip: token.client_ip,
+        email: token.email,
+        items: Cart.items
+      },
+      payment: token
+    };
+  let checkoutUrl = "https://us-central1-bezor-software.cloudfunctions.net/stripe_charge";
+ 
+ 
+    $.ajax({ 
+        type: 'POST', 
+        url: checkoutUrl, 
+        data: payload,
+        dataType: 'json'
+    }).done(res => {
+      console.log('response:checkoutUrl',res)
+    }).fail(err => {
+      console.log('Error:checkoutUrl',err);
+    });
+  }
+});
+
+var app = new Vue({
+  el: "#order",
+  firebase : {
+    progress: {
+      source: db.ref(`sales/${orderId}/progress`),
+      asObject: true
+    },
+    invoice: {
+      source: db.ref(`sales/${orderId}/invoice`),
+      asObject: true     
+    }
+  },
+  data: Cart,
+  computed : {
+    hasItems : function(){
+      return this.items.length > 0;
+    }
+  },
+  filters : {
+    money: function(val){
+      return accounting.formatMoney(val);
+    }
+  },
+  methods: {
+    remove: function(item){
+      Cart.removeItem(item.sku);
+    },
+    downloadButton: function(download){
+      if(download.downloadsRemaining > 0){
+        return `Download (${download.size})`
+      }else{
+        return "No Downloads Left"
+      }
+    },
+    noDownloads: function(download){
+      return download.downloadsRemaining <= 0;
+    },
+    openStripe: function(ev){
+      var total = accounting.formatMoney(Cart.total);
+      ev.preventDefault();
+      console.log(Cart.items.length , total, Cart.total);
+      handler.open({
+        name: 'Bezor Software',
+        description: Cart.items.length + " items: " + total,
+        amount: Cart.total
+      });
+    },
+    execDownload: function(item){
+      const url = item.downloadUrl;
+      $("#download-"+item.id).toggleClass("loading");
+      //ping the server, get a download url, do it
+      $.get(url).done(function(returnUrl){
+        $("#download-"+item.id).toggleClass("loading");
+        if(returnUrl){
+          location.href = returnUrl;
+        }else{
+          $("#download-"+item.id).val("No more downloads");
+        }
+      }).fail(function(err){
+        $("#download-"+item.id).toggleClass("loading");
+        console.log('Error:execDownload',err);
+      });
+    }
+  }
+});
+</script>
